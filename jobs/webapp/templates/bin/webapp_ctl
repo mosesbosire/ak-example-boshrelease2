@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e
+
+PIDFILE=/var/vcap/sys/run/webapp/webapp.pid
+mkdir -p $(dirname $PIDFILE)
+
+JOB_NAME=webapp
+JOB_DIR=/var/vcap/jobs/$JOB_NAME
+
+LOG_DIR=/var/vcap/sys/log/webapp
+mkdir -p $LOG_DIR
+
+source $JOB_DIR/helpers/ctl_utils.sh
+
+export PATH="/var/vcap/packages/ruby/bin:$PATH"
+
+
+case "$1" in
+  start)
+    pid_guard $PIDFILE $JOB_NAME
+    echo $$ > $PIDFILE
+
+    cd /var/vcap/packages/webapp
+    bundle install
+
+    exec chpst -u vcap bundle exec rackup \
+      -o 0.0.0.0 \
+      -p <%= p("webapp.port") %> \
+      >> $LOG_DIR/webapp.log 2>&1
+
+    ;;
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+
+  *)
+    echo "usage: $0 start|stop"
+    exit 1
+esac
