@@ -1,0 +1,6 @@
+---
+name: ruby
+
+files:
+- ruby/ruby-*.tar.bz2
+- ruby/bundler-*.gem

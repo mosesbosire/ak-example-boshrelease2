@@ -1,0 +1,17 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+mkdir -p ruby_src
+tar -xjf ruby/ruby-*.tar.bz2 -C ruby_src --strip-components=1
+pushd ruby_src
+
+./configure --prefix=${BOSH_INSTALL_TARGET}
+CPUs=$(grep -c ^processor /proc/cpuinfo)
+make -j${CPUs}
+make install
+
+popd
+
+${BOSH_INSTALL_TARGET}/bin/gem install ruby/bundler-*.gem --no-ri --no-rdoc
+
+
