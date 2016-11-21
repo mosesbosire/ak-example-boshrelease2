@@ -1,0 +1,70 @@
+name: ak-example
+
+director_uuid: <%= `bosh status --uuid` %>
+
+releases:
+- name: ak-example
+  version: latest
+
+
+jobs:
+- name: proxy
+  instances: 1
+  templates:
+  - name: proxy
+    release: ak-example
+  networks:
+  - name: default
+    static_ips: [10.244.1.2]
+  resource_pool: small
+
+- name: webapp
+  instances: 2
+  templates:
+  - name: webapp
+    release: ak-example
+  networks:
+  - name: default
+    static_ips: [10.244.1.6, 10.244.1.10]
+  resource_pool: small
+
+properties:
+  proxy:
+    backends: [10.244.1.6, 10.244.1.10]
+    backend_port: 8080
+  webapp:
+    port: 8080
+
+
+resource_pools:
+- name: small
+  network: default
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+
+
+networks:
+- name: default
+  type: manual
+  subnets:
+  - range: 10.244.1.0/24
+    gateway: 10.244.1.1
+    static:
+    - 10.244.1.2
+    - 10.244.1.6
+    - 10.244.1.10
+    - 10.244.1.14
+
+update:
+  canaries: 1
+  max_in_flight: 4
+  canary_watch_time: 1000-120000
+  update_watch_time: 1000-120000
+  serial: false
+
+
+compilation:
+  workers: 5
+  reuse_compilation_vms: true
+  network: default
