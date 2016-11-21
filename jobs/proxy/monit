@@ -1,0 +1,6 @@
+check process proxy
+  with pidfile /var/vcap/sys/run/proxy/haproxy.pid
+  start program "/var/vcap/jobs/proxy/bin/haproxy_ctl start"
+  stop program "/var/vcap/jobs/proxy/bin/haproxy_ctl stop"
+  group vcap
+

@@ -1,0 +1,5 @@
+---
+name: haproxy
+
+files:
+- haproxy/*.tar.gz

@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+
+set -e
+
+PIDFILE=/var/vcap/sys/run/proxy/haproxy.pid
+mkdir -p $(dirname $PIDFILE)
+
+JOB_NAME=proxy
+JOB_DIR=/var/vcap/jobs/$JOB_NAME
+
+LOG_DIR=/var/vcap/sys/log/proxy
+mkdir -p $LOG_DIR
+
+source $JOB_DIR/helpers/ctl_utils.sh
+
+
+case "$1" in
+  start)
+    pid_guard $PIDFILE $JOB_NAME
+    echo $$ > $PIDFILE
+    exec /var/vcap/packages/haproxy/bin/haproxy -f $JOB_DIR/config/haproxy.conf \
+      >> $LOG_DIR/haproxy.log
+
+    ;;
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+
+  *)
+    echo 'usage: haproxy_ctl start|stop'
+    exit 1
+esac

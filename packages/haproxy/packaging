@@ -1,0 +1,13 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+mkdir haproxy_src
+tar -xzf haproxy/haproxy-*.tar.gz -C haproxy_src --strip-components=1
+cd haproxy_src
+
+CPUS=$(grep -c ^processor /proc/cpuinfo)
+make TARGET=linux2628 USE_OPENSSL=1 USE_ZLIB=1 -j${CPUS}
+
+mkdir -p $BOSH_INSTALL_TARGET/bin
+chmod 755 haproxy
+cp haproxy $BOSH_INSTALL_TARGET/bin

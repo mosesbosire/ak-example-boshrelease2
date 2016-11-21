@@ -1,0 +1,32 @@
+global
+    log localhost format rfc5424 syslog notice
+    user vcap
+    group vcap
+    maxconn 64000
+    spread-checks 4
+    tune.ssl.default-dh-param 2048
+
+defaults
+    log global
+    maxconn 64000
+    option contstats
+    option tcplog
+    timeout connect 5
+    timeout client 30
+    timeout server 30
+    timeout queue 30
+
+frontend traffic-in
+    mode http
+
+    bind :<%= p("proxy_port") %>
+
+    default_backend service
+
+backend service
+    mode http
+    balance roundrobin
+
+    <% p("backends").each_with_index do |ip, index| %>
+    server backend<%= index %> <%= ip %>:<%= p("backend_port") %> check inter 1000
+    <% end %>

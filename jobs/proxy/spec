@@ -1,0 +1,25 @@
+---
+name: proxy
+
+templates:
+  config/haproxy.conf.erb: config/haproxy.conf
+  bin/haproxy_ctl.erb: bin/haproxy_ctl
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+packages:
+- haproxy
+
+properties:
+  backends:
+    description: A list of IPs to forward traffic to
+
+  backend_port:
+    description: The port the backends are listening on
+    default: 8080
+
+  proxy_port:
+    description: Port for incoming connections
+    default: 80
+
+
+
