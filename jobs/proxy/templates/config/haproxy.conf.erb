@@ -19,7 +19,7 @@ defaults
 frontend traffic-in
     mode http
 
-    bind :<%= p("proxy_port") %>
+    bind :<%= p("proxy.port") %>
 
     default_backend service
 
@@ -27,6 +27,6 @@ backend service
     mode http
     balance roundrobin
 
-    <% p("backends").each_with_index do |ip, index| %>
-    server backend<%= index %> <%= ip %>:<%= p("backend_port") %> check inter 1000
+    <% p("proxy.backends").each_with_index do |ip, index| %>
+    server backend<%= index %> <%= ip %>:<%= p("proxy.backend_port") %> check inter 1000
     <% end %>

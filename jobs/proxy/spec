@@ -10,14 +10,14 @@ packages:
 - haproxy
 
 properties:
-  backends:
+  proxy.backends:
     description: A list of IPs to forward traffic to
 
-  backend_port:
+  proxy.backend_port:
     description: The port the backends are listening on
     default: 8080
 
-  proxy_port:
+  proxy.port:
     description: Port for incoming connections
     default: 80
 
