@@ -28,12 +28,29 @@ jobs:
     static_ips: [10.244.1.6, 10.244.1.10]
   resource_pool: small
 
+- name: storage
+  instances: 1
+  templates:
+  - name: storage
+    release: ak-example
+  networks:
+  - name: default
+    static_ips: [10.244.1.14]
+  resource_pool: small
+
+
 properties:
   proxy:
     backends: [10.244.1.6, 10.244.1.10]
     backend_port: 8080
   webapp:
     port: 8080
+    redis:
+      host: 10.244.1.14
+      password: redispass
+  storage:
+    redis:
+      password: redispass
 
 
 resource_pools:
