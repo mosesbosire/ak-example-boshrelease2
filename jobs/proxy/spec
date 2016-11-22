@@ -3,7 +3,7 @@ name: proxy
 
 templates:
   config/haproxy.conf.erb: config/haproxy.conf
-  bin/haproxy_ctl.erb: bin/haproxy_ctl
+  bin/haproxy_ctl: bin/haproxy_ctl
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 packages:
