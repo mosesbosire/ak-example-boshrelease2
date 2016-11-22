@@ -1,0 +1,74 @@
+name: ak-example
+
+director_uuid: <%= `bosh status --uuid` %>
+
+releases:
+- name: ak-example
+  version: latest
+
+
+stemcells:
+- alias: lite
+  os: ubuntu-trusty
+  version: latest
+
+
+instance_groups:
+- name: proxy
+  instances: 1
+  jobs:
+  - name: proxy
+    release: ak-example
+    properties:
+      proxy:
+        backends: [10.244.1.6, 10.244.1.10]
+        backend_port: 8080
+  networks:
+  - name: default
+    static_ips: [10.244.1.2]
+  vm_type: small
+  stemcell: lite
+  azs: [z1]
+
+- name: webapp
+  instances: 2
+  jobs:
+  - name: webapp
+    release: ak-example
+    properties:
+      webapp:
+        port: 8080
+        redis:
+          host: 10.244.1.14
+          password: redispass
+  networks:
+  - name: default
+    static_ips: [10.244.1.6, 10.244.1.10]
+  vm_type: small
+  stemcell: lite
+  azs: [z1]
+
+- name: storage
+  instances: 1
+  jobs:
+  - name: storage
+    release: ak-example
+    properties:
+      storage:
+        redis:
+          password: redispass
+  networks:
+  - name: default
+    static_ips: [10.244.1.14]
+  vm_type: small
+  stemcell: lite
+  azs: [z1]
+
+
+update:
+  canaries: 1
+  max_in_flight: 4
+  canary_watch_time: 1000-120000
+  update_watch_time: 1000-120000
+  serial: false
+
