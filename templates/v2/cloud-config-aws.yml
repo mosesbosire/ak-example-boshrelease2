@@ -1,0 +1,55 @@
+azs:
+- name: z1
+  cloud_properties:
+    availability_zone: eu-west-1a
+
+
+vm_types:
+- name: small
+  cloud_properties:
+    instance_type: t2.small
+    availability_zone: eu-west-1a
+
+
+disk_types:
+- name: default
+  disk_size: 5000
+  cloud_properties:
+    type: standard
+
+
+compilation:
+  workers: 5
+  az: z1
+  reuse_compilation_vms: true
+  vm_type: small
+  network: default
+
+
+networks:
+- name: private
+  type: manual
+  cloud_properties:
+    subnet_id: subnet-40a9e424
+    security_groups: [bosh]
+  subnets:
+  - range: 10.0.1.0/24
+    gateway: 10.0.1.1
+    reserved: [10.0.1.1 - 10.0.1.6]
+    static: [10.0.1.10 - 10.0.1.10]
+    azs: [z1]
+
+- name: public
+  type: manual
+  cloud_properties:
+    subnet_id: subnet-41a9e425
+    security_groups: [bosh]
+  subnets:
+  - range: 10.0.0.0/24
+    gateway: 10.0.0.1
+    reserved: [10.0.0.1 - 10.0.0.6]
+    static: [10.0.0.10 - 10.0.0.10]
+    azs: [z1]
+
+- name: eip
+  type: vip

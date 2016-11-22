@@ -21,11 +21,14 @@ instance_groups:
     release: ak-example
     properties:
       proxy:
-        backends: [10.244.1.6, 10.244.1.10]
+        backends: [10.0.1.15, 10.0.1.16]
         backend_port: 8080
   networks:
-  - name: default
-    static_ips: [10.244.1.2]
+  - name: public
+    static_ips: [10.0.0.10]
+    default: [dns, gateway]
+  - name: eip
+    static_ips: [52.213.179.29]
   vm_type: small
   stemcell: lite
   azs: [z1]
@@ -39,11 +42,11 @@ instance_groups:
       webapp:
         port: 8080
         redis:
-          host: 10.244.1.14
+          host: 10.0.1.10
           password: redispass
   networks:
-  - name: default
-    static_ips: [10.244.1.6, 10.244.1.10]
+  - name: private
+    static_ips: [10.0.1.15, 10.0.1.16]
   vm_type: small
   stemcell: lite
   azs: [z1]
@@ -58,8 +61,8 @@ instance_groups:
         redis:
           password: redispass
   networks:
-  - name: default
-    static_ips: [10.244.1.14]
+  - name: private
+    static_ips: [10.0.1.10]
   vm_type: small
   stemcell: lite
   azs: [z1]
