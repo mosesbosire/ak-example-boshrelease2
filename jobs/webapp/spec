@@ -3,6 +3,7 @@ name: webapp
 
 templates:
   bin/webapp_ctl: bin/webapp_ctl
+  config/webapp.yml: config/webapp.yml
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 packages:
@@ -13,3 +14,14 @@ properties:
   webapp.port:
     description: The port the service should listen on
     default: 8080
+
+  webapp.redis.host:
+    description: The host/ip of the redis instance
+
+  webapp.redis.port:
+    description: The port of the redis instance
+    default: 6379
+
+  webapp.redis.password:
+    description: The password of the redis instance
+    default: ""

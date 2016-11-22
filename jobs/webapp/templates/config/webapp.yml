@@ -1,0 +1,4 @@
+redis:
+  host: <%= p("webapp.redis.host") %>
+  port: <%= p("webapp.redis.port") %>
+  password: <%= p("webapp.redis.password") %>
