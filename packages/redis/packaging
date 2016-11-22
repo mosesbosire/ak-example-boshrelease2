@@ -1,0 +1,11 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+mkdir redis_src
+tar -xzf redis/redis-*.tar.gz -C redis_src --strip-components=1
+cd redis_src
+
+CPUs=$(grep -c ^processor /proc/cpuinfo)
+make -j${CPUs}
+
+make PREFIX=${BOSH_INSTALL_TARGET} install

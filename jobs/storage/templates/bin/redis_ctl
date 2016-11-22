@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+
+PIDFILE=/var/vcap/sys/run/storage/redis.pid
+mkdir -p $(dirname $PIDFILE)
+
+JOB_NAME=storage
+JOB_DIR=/var/vcap/jobs/$JOB_NAME
+
+LOG_DIR=/var/vcap/sys/log/storage
+mkdir -p $LOG_DIR
+
+source $JOB_DIR/helpers/ctl_utils.sh
+
+export PATH="/var/vcap/packages/redis/bin:$PATH"
+
+mkdir -p /var/vcap/store/storage
+chown -R vcap: /var/vcap/store/storage
+
+case "$1" in
+  start)
+    pid_guard $PIDFILE $JOB_NAME
+    echo $$ > $PIDFILE
+    exec chpst -u vcap redis-server $JOB_DIR/config/redis.conf \
+      >> $LOG_DIR/redis.log 2>&1
+
+    ;;
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+
+  *)
+    echo "usage: $0 start|stop"
+    exit 1
+esac

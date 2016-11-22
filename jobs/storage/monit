@@ -1,0 +1,6 @@
+check process storage
+  with pidfile /var/vcap/sys/run/storage/redis.pid
+  start program "/var/vcap/jobs/storage/bin/redis_ctl start"
+  stop program "/var/vcap/jobs/storage/bin/redis_ctl stop"
+  group vcap
+

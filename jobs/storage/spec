@@ -1,0 +1,19 @@
+---
+name: storage
+
+templates:
+  bin/redis_ctl: bin/redis_ctl
+  config/redis.conf.erb: config/redis.conf
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+packages:
+- redis
+
+properties:
+  storage.redis.port:
+    description: Redis server port
+    default: 6379
+
+  storage.redis.password:
+    description: Password for the redis instance, no auth if not set
+
