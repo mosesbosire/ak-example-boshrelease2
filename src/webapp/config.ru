@@ -1,10 +1,8 @@
-require "bundler/setup"
 require "sinatra"
+require "yaml"
 
-class WebApp < Sinatra::Base
-  get "/" do
-    "Running happily in a BOSH deployment"
-  end
-end
+require_relative "lib/api"
 
-run WebApp
+config = YAML.load_file(ENV.fetch("CONFIG_FILE"))
+
+run Api.new(config)
