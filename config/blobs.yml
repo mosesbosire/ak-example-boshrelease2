@@ -1,1 +1,17 @@
---- {}
+---
+haproxy/haproxy-1.6.10.tar.gz:
+  object_id: 55126e43-950c-4bc9-a66c-70655f9e07da
+  sha: 633a0391314388ebfbbaa4742840f09a27e71afe
+  size: 1571842
+redis/redis-3.2.5.tar.gz:
+  object_id: e72a7a10-f79e-42a8-ad4d-8646f3f5d253
+  sha: 6f6333db6111badaa74519d743589ac4635eba7a
+  size: 1544040
+ruby/ruby-2.3.3.tar.bz2:
+  object_id: 1f3879d4-6b73-44d5-8979-947056ff5b2a
+  sha: a8db9ce7f9110320f33b8325200e3ecfbd2b534b
+  size: 14433673
+ruby/bundler-1.13.6.gem:
+  object_id: 8779cf1f-87ff-4186-b5d4-8746413d22a3
+  sha: c4b33f5e0a6ad4a363d2820260f10454197cceff
+  size: 307200
