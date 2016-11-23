@@ -7,10 +7,12 @@ describe Api do
   end
 
   describe "/" do
-    it "responds with 200" do
-      get "/"
+    describe "GET" do
+      it "responds with 200" do
+        get "/"
 
-      expect(last_response).to be_ok
+        expect(last_response).to be_ok
+      end
     end
   end
 
@@ -41,6 +43,21 @@ describe Api do
       it "sets the value of the key in the storage" do
         expect(redis).to receive(:set).with("key", "foobar")
         post "/storage/key", '{"value":"foobar"}'
+
+        expect(last_response).to be_ok
+      end
+    end
+
+    describe "DELETE" do
+      let(:redis) { double }
+
+      before do
+        allow(RedisFactory).to receive(:redis).and_return redis
+      end
+
+      it "deletes the value of the key in the storage" do
+        expect(redis).to receive(:del).with("key")
+        delete "/storage/key"
 
         expect(last_response).to be_ok
       end

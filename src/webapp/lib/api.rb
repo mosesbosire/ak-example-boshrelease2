@@ -44,5 +44,12 @@ class Api < Sinatra::Base
   post "/storage/:key" do
     redis = settings.storage
     redis.set(params[:key], JSON.parse(request.body.read)["value"])
+    ""
+  end
+
+  delete "/storage/:key" do
+    redis = settings.storage
+    redis.del(params[:key])
+    ""
   end
 end
