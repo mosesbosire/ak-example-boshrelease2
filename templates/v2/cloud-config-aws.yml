@@ -33,27 +33,27 @@ compilation:
 networks:
 - name: private
   type: manual
-  cloud_properties:
-    subnet_id: subnet-40a9e424
-    security_groups: [bosh]
   subnets:
   - range: 10.0.1.0/24
     gateway: 10.0.1.1
     reserved: [10.0.1.1 - 10.0.1.6]
     static: [10.0.1.10 - 10.0.1.20]
     azs: [z1]
+    cloud_properties:
+      subnet: subnet-40a9e424
+      security_groups: [bosh]
 
 - name: public
   type: manual
-  cloud_properties:
-    subnet_id: subnet-41a9e425
-    security_groups: [bosh]
   subnets:
   - range: 10.0.0.0/24
     gateway: 10.0.0.1
     reserved: [10.0.0.1 - 10.0.0.6]
     static: [10.0.0.10 - 10.0.0.20]
     azs: [z1]
+    cloud_properties:
+      subnet: subnet-41a9e425
+      security_groups: [bosh]
 
 - name: eip
   type: vip
