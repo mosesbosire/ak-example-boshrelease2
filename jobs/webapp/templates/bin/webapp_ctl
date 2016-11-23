@@ -25,6 +25,7 @@ case "$1" in
     bundle install
 
     export CONFIG_FILE="$JOB_DIR/config/webapp.yml"
+    export RACK_ENV=<%= p("webapp.rack_env") %>
 
     exec chpst -u vcap bundle exec rackup \
       -o 0.0.0.0 \

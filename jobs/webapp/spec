@@ -11,6 +11,10 @@ packages:
 - webapp
 
 properties:
+  webapp.rack_env:
+    description: the value of the RACK_ENV variable
+    default: production
+
   webapp.port:
     description: The port the service should listen on
     default: 8080
