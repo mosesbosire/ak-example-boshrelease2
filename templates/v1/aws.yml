@@ -1,0 +1,116 @@
+name: ak-example
+
+director_uuid: <%= `bosh status --uuid` %>
+
+releases:
+- name: ak-example
+  version: latest
+
+
+jobs:
+- name: proxy
+  instances: 1
+  templates:
+  - name: proxy
+    release: ak-example
+  networks:
+  - name: public
+    static_ips: [10.0.0.10]
+    default: [dns, gateway]
+  - name: eip
+    static_ips: [52.213.179.29]
+  resource_pool: small
+
+- name: webapp
+  instances: 2
+  templates:
+  - name: webapp
+    release: ak-example
+  networks:
+  - name: private
+    static_ips:
+    - 10.0.1.15
+    - 10.0.1.16
+  resource_pool: small
+
+- name: storage
+  instances: 1
+  templates:
+  - name: storage
+    release: ak-example
+  networks:
+  - name: private
+    static_ips: [10.0.1.10]
+  resource_pool: small
+
+
+properties:
+  proxy:
+    backends:
+    - 10.0.1.15
+    - 10.0.1.16
+    backend_port: 8080
+  webapp:
+    port: 8080
+    redis:
+      host: 10.0.1.10
+      password: redispass
+  storage:
+    redis:
+      password: redispass
+
+
+resource_pools:
+- name: small
+  network: private
+  stemcell:
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: latest
+  cloud_properties:
+    instance_type: t2.small
+    availability_zone: eu-west-1a
+
+
+networks:
+- name: private
+  type: manual
+  subnets:
+  - range: 10.0.1.0/24
+    gateway: 10.0.1.1
+    reserved: [10.0.1.1 - 10.0.1.6]
+    static: [10.0.1.10 - 10.0.1.20]
+    cloud_properties:
+      subnet: subnet-40a9e424
+      security_groups: [bosh]
+
+- name: public
+  type: manual
+  subnets:
+  - range: 10.0.0.0/24
+    gateway: 10.0.0.1
+    reserved: [10.0.0.1 - 10.0.0.6]
+    static: [10.0.0.10 - 10.0.0.10]
+    cloud_properties:
+      subnet: subnet-41a9e425
+      security_groups:
+      - bosh
+      - from-wework
+
+- name: eip
+  type: vip
+
+update:
+  canaries: 1
+  max_in_flight: 4
+  canary_watch_time: 1000-120000
+  update_watch_time: 1000-120000
+  serial: false
+
+
+compilation:
+  workers: 5
+  reuse_compilation_vms: true
+  network: private
+  cloud_properties:
+    instance_type: c4.large
+    availability_zone: eu-west-1a
