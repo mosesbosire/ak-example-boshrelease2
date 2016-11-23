@@ -1,0 +1,37 @@
+#!/bin/bash -ex
+
+ENDPOINT="<%= p("systest.service_host") %>:<%= p("systest.service_port") %>"
+export PATH="/var/vcap/packages/redis/bin:$PATH"
+timestamp=$(date +%s)
+key="systest-$timestamp)"
+
+cleanup() {
+  curl "$ENDPOINT/storage/$key" -X DELETE
+  if [ $status -ne 200 ]; then
+    echo "the service errored during cleanup"
+    exit 1
+  fi
+}
+
+trap cleanup EXIT
+
+# store value
+status=$(curl -s -o /dev/null -w "%{http_code}" -X POST -d "{\"value\":\"$timestamp\"}" "$ENDPOINT/storage/$key")
+if [ $status -ne 200 ]; then
+  echo "the service errored"
+  exit 1
+fi
+
+# read value
+status=$(curl -s -o response -w "%{http_code}" "$ENDPOINT/storage/$key")
+if [ $status -ne 200 ]; then
+  echo "the service errored"
+  exit 1
+fi
+
+data=$(cat response)
+if [ "$data" != "\"$timestamp\"" ]; then
+  echo "the service returned an unexpected value: $data"
+  exit 1
+fi
+

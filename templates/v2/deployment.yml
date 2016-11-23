@@ -67,6 +67,21 @@ instance_groups:
   stemcell: lite
   azs: [z1]
 
+- name: systest
+  instances: 1
+  lifecycle: errand
+  jobs:
+  - name: systest
+    release: ak-example
+    properties:
+      systest:
+        service_host: 10.244.1.14
+  networks:
+  - name: default
+    static_ips: [10.244.1.18]
+  vm_type: small
+  stemcell: lite
+  azs: [z1]
 
 update:
   canaries: 1

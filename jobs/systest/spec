@@ -1,0 +1,15 @@
+---
+name: systest
+
+templates:
+  bin/run: bin/run
+
+packages: []
+
+properties:
+  systest.service_host:
+      description: public hostname of the service
+
+  systest.service_port:
+      description: port of the http server
+      default: 80

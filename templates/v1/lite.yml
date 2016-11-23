@@ -38,6 +38,16 @@ jobs:
     static_ips: [10.244.1.14]
   resource_pool: small
 
+- name: systest
+  instances: 1
+  lifecycle: errand
+  templates:
+  - name: systest
+    release: ak-example
+  networks:
+  - name: default
+    static_ips: [10.244.1.18]
+  resource_pool: small
 
 properties:
   proxy:
@@ -51,6 +61,8 @@ properties:
   storage:
     redis:
       password: redispass
+  systest:
+    service_host: 10.244.1.2
 
 
 resource_pools:

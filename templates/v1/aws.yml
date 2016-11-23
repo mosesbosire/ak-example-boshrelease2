@@ -43,6 +43,15 @@ jobs:
     static_ips: [10.0.1.10]
   resource_pool: small
 
+- name: systest
+  instances: 1
+  lifecycle: errand
+  templates:
+  - name: systest
+    release: ak-example
+  networks:
+  - name: private
+  resource_pool: small
 
 properties:
   proxy:
@@ -58,6 +67,8 @@ properties:
   storage:
     redis:
       password: redispass
+  systest:
+    service_host: 10.0.0.10
 
 
 resource_pools:
