@@ -40,7 +40,7 @@ networks:
   - range: 10.0.1.0/24
     gateway: 10.0.1.1
     reserved: [10.0.1.1 - 10.0.1.6]
-    static: [10.0.1.10 - 10.0.1.10]
+    static: [10.0.1.10 - 10.0.1.20]
     azs: [z1]
 
 - name: public
@@ -52,7 +52,7 @@ networks:
   - range: 10.0.0.0/24
     gateway: 10.0.0.1
     reserved: [10.0.0.1 - 10.0.0.6]
-    static: [10.0.0.10 - 10.0.0.10]
+    static: [10.0.0.10 - 10.0.0.20]
     azs: [z1]
 
 - name: eip
