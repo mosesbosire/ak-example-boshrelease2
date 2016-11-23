@@ -9,6 +9,10 @@ vm_types:
   cloud_properties:
     instance_type: t2.small
     availability_zone: eu-west-1a
+- name: compiler
+  cloud_properties:
+    instance_type: c4.large
+    availability_zone: eu-west-1a
 
 
 disk_types:
@@ -22,7 +26,7 @@ compilation:
   workers: 5
   az: z1
   reuse_compilation_vms: true
-  vm_type: small
+  vm_type: compiler
   network: default
 
 
