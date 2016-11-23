@@ -1,0 +1,43 @@
+---
+packages:
+- name: haproxy
+  version: a0a572f6bf7ed26f98dec221f5f5289afc65c712
+  fingerprint: a0a572f6bf7ed26f98dec221f5f5289afc65c712
+  sha1: 41242ea6d21f06e12d9bd95985f089e3fada6e31
+  dependencies: []
+- name: redis
+  version: 2dd8dc15a05733848dd6fdde5da40340960c37da
+  fingerprint: 2dd8dc15a05733848dd6fdde5da40340960c37da
+  sha1: be61fb51d62aa6d4f470e45f77ee5737d3c146fe
+  dependencies: []
+- name: ruby
+  version: 7197a4312e72ea9a4aa919dc9816fd109145438a
+  fingerprint: 7197a4312e72ea9a4aa919dc9816fd109145438a
+  sha1: e10b0ffa22f082ea571479016dede85fd17c7400
+  dependencies: []
+- name: webapp
+  version: 1dfb0d7edd2059f3d2334f98d0e8f4ba17957711
+  fingerprint: 1dfb0d7edd2059f3d2334f98d0e8f4ba17957711
+  sha1: 4f50098c23926dac90513ec93ef8f102aef5527d
+  dependencies: []
+jobs:
+- name: proxy
+  version: ba4f5f994e5dee7290db6d18eafe027a2a263183
+  fingerprint: ba4f5f994e5dee7290db6d18eafe027a2a263183
+  sha1: 921b04e6f9d78e53974e9a9c5464dd6b145dd431
+- name: systest
+  version: 0e52ebd8e7bc81129b9deff9e12857ee3909df2f
+  fingerprint: 0e52ebd8e7bc81129b9deff9e12857ee3909df2f
+  sha1: 5d304a23819e30205f288fb569723c40bb1ec0ec
+- name: storage
+  version: 9a799a8cfa0dd572cf03b990789bf5e94dbf4042
+  fingerprint: 9a799a8cfa0dd572cf03b990789bf5e94dbf4042
+  sha1: 6d173b108466c2d9ba3d9fa15a5e1858c988bfea
+- name: webapp
+  version: bf55b783feaf4f4de13f7d2ad34379712154af6f
+  fingerprint: bf55b783feaf4f4de13f7d2ad34379712154af6f
+  sha1: 1b251c9307dc27d4616e8e9e309e94b84155bea3
+commit_hash: fc734e16
+uncommitted_changes: true
+name: ak-example
+version: '1'

@@ -3,3 +3,4 @@ blobstore:
   provider: s3
   options:
     bucket_name: ak-example-boshrelease-blobstore
+final_name: ak-example
