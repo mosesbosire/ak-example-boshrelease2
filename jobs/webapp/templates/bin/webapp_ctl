@@ -22,7 +22,7 @@ case "$1" in
     echo $$ > $PIDFILE
 
     cd /var/vcap/packages/webapp
-    bundle install
+    bundle install --local
 
     export CONFIG_FILE="$JOB_DIR/config/webapp.yml"
     export RACK_ENV=<%= p("webapp.rack_env") %>
