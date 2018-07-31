@@ -27,11 +27,23 @@ compilation:
   az: z1
   reuse_compilation_vms: true
   vm_type: compiler
-  network: default
+  network: private
 
 
 networks:
 - name: private
+  type: manual
+  subnets:
+  - range: 10.0.2.0/24
+    gateway: 10.0.2.1
+    reserved: [10.0.2.1 - 10.0.2.6]
+    static: [10.0.2.10 - 10.0.2.20]
+    azs: [z1]
+    cloud_properties:
+      subnet: subnet-8812c6d2
+      security_groups: [cf-training-mosesbosire2-bosh]
+
+- name: public
   type: manual
   subnets:
   - range: 10.0.1.0/24
@@ -40,20 +52,8 @@ networks:
     static: [10.0.1.10 - 10.0.1.20]
     azs: [z1]
     cloud_properties:
-      subnet: subnet-40a9e424
-      security_groups: [bosh]
-
-- name: public
-  type: manual
-  subnets:
-  - range: 10.0.0.0/24
-    gateway: 10.0.0.1
-    reserved: [10.0.0.1 - 10.0.0.6]
-    static: [10.0.0.10 - 10.0.0.20]
-    azs: [z1]
-    cloud_properties:
-      subnet: subnet-41a9e425
-      security_groups: [bosh]
+      subnet: subnet-be16c2e4
+      security_groups: [cf-training-mosesbosire2-bosh]
 
 - name: eip
   type: vip
